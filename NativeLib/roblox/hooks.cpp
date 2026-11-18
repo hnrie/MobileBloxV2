@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <unordered_set>
 
-#include "../exploit.hpp"
+#include "../runtime.hpp"
 #include "../utils/utils.hpp"
 #include "update.hpp"
 #include "../execution/execution.hpp"
@@ -20,7 +20,7 @@ static std::uintptr_t startscript_hook( std::uintptr_t sc, std::uintptr_t script
     if ( curr_rL != rL )
     {
         curr_rL = rL;
-        exploit::start( rL );
+        runtime::start( rL );
     }
     */
     
@@ -39,7 +39,7 @@ static int ongameloaded_hook( std::uintptr_t a1, int a2, int placeid, int a4 )
         // inf loop because rl doesnt change 
 initenv: // maybe a better way than this could be used
         // failed so we restart
-        if (!exploit::start( ))
+        if (!runtime::start( ))
         {
             goto initenv;
         }
@@ -70,8 +70,8 @@ static int jobstart_hook( std::uintptr_t job )
             // Mark the job as started to avoid duplicate calls
             startedJobs.insert(job);
             
-            // Start our exploit using this job
-            exploit::start( job );
+            // Start the runtime using this job
+            runtime::start( job );
         }
     }
     
@@ -93,7 +93,7 @@ static int jobstop_hook( std::uintptr_t job )
      // memcmp as Mr Corruption is always haunting us
     if ( memcmp(job_name, "WaitingHybridScriptsJob", 23) == 0 )
     {
-        exploit::leave( );
+        runtime::leave( );
     }
     
     return original( job );
@@ -104,7 +104,7 @@ static int ongameleave_hook( std::uintptr_t a1, int placeid )
 {
     const auto original = *reinterpret_cast<decltype( ongameleave_hook )*>( ongameleave_original );
     
-    exploit::leave( );
+    runtime::leave( );
     
     return original( a1, placeid );
 }

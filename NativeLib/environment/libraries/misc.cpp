@@ -22,8 +22,8 @@ static int getmtgenv(lua_State* ls)
 {
     LOGD(" LuauEnvCall -> getmgenv - CallingThread -> %p", ls);
     
-    lua_pushvalue(taskscheduler::get_singleton( )->get_ExploitState( ), LUA_GLOBALSINDEX);
-    lua_xmove(taskscheduler::get_singleton( )->get_ExploitState( ), ls, 1);
+    lua_pushvalue(taskscheduler::get_singleton( )->get_RuntimeState( ), LUA_GLOBALSINDEX);
+    lua_xmove(taskscheduler::get_singleton( )->get_RuntimeState( ), ls, 1);
     return 1;
 }
 
@@ -69,8 +69,8 @@ static int identifyexecutor(lua_State* ls)
 {
     LOGD(" LuauEnvCall -> identifyexecutor - CallingThread -> %p", ls);
     
-    lua_pushstring(ls, exploit_configuration::exploit_name.c_str( ));
-    lua_pushstring(ls, exploit_configuration::exploit_version.c_str( ));
+    lua_pushstring(ls, app_config::app_name.c_str( ));
+    lua_pushstring(ls, app_config::app_version.c_str( ));
     return 2;    
 }
 
@@ -192,7 +192,7 @@ static int setclipboard(lua_State* ls)
 static int mb_schedscript(lua_State* ls)
 {
     auto script = luaL_checkstring(ls, 1);
-    exploit::execution::get_singleton( )->schedule( script );
+    runtime::execution::get_singleton( )->schedule( script );
     return 0;
 }
 
@@ -230,7 +230,7 @@ static const luaL_Reg funcs[ ] = {
     {nullptr, nullptr}
 };
 
-auto exploit::environment::misc( lua_State* ls ) -> void
+auto runtime::environment::misc( lua_State* ls ) -> void
 {
     lua_pushvalue(ls, LUA_GLOBALSINDEX);
     register_lib(ls, nullptr, funcs);

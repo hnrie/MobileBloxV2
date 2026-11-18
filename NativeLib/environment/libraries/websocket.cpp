@@ -10,7 +10,7 @@
 
 // this isnt written by me - nop
 
-class exploit_websocket {
+class websocket_client {
 public:
     lua_State* th = nullptr;
     bool connected = false;
@@ -73,7 +73,7 @@ public:
                     luaL_checktype(L, 1, LUA_TUSERDATA);
                     std::string data = luaL_checkstring(L, 2);
                     
-                    exploit_websocket* webSocket = reinterpret_cast<exploit_websocket*>(lua_touserdata(L, -10003));
+                    websocket_client* webSocket = reinterpret_cast<websocket_client*>(lua_touserdata(L, -10003));
                     webSocket->webSocket->send(data, true);
                     return 0;
                 }, ("WebSocket.Send"), 1);
@@ -86,7 +86,7 @@ public:
                 [ ](lua_State* L) -> int {
                     luaL_checktype(L, 1, LUA_TUSERDATA);
 
-                    exploit_websocket* webSocket = reinterpret_cast<exploit_websocket*>(lua_touserdata(L, -10003));
+                    websocket_client* webSocket = reinterpret_cast<websocket_client*>(lua_touserdata(L, -10003));
                     webSocket->webSocket->close( );
                     return 0;
                 }, ("WebSocket.Close"), 1);
@@ -101,8 +101,8 @@ static int websocket_connect(lua_State* ls)
     LOGD(" LuauEnvCall -> websocket_connect - CallingThread -> %p", ls);
     
     std::string url = luaL_checkstring(ls, 1);
-    exploit_websocket* webSocket = (exploit_websocket*)lua_newuserdata(ls, sizeof(exploit_websocket));
-    *webSocket = exploit_websocket{ };
+    websocket_client* webSocket = (websocket_client*)lua_newuserdata(ls, sizeof(websocket_client));
+    *webSocket = websocket_client{ };
 
     webSocket->th = roblox::functions::rlua_newthread(ls);
     webSocket->threadRef = lua_ref(ls, -1);
@@ -143,7 +143,7 @@ static int websocket_connect(lua_State* ls)
     lua_pushvalue(ls, -2);
     lua_pushcclosure(ls,
         [ ](lua_State* L) -> int {
-            exploit_websocket* webSocket = reinterpret_cast<exploit_websocket*>(lua_touserdata(L, lua_upvalueindex(1)));
+            websocket_client* webSocket = reinterpret_cast<websocket_client*>(lua_touserdata(L, lua_upvalueindex(1)));
             return webSocket->handleIndex(L);
         },
     ("__index"), 1);
@@ -168,7 +168,7 @@ static const luaL_Reg funcs[ ] = {
     {nullptr, nullptr}
 };
 
-auto exploit::environment::websocket( lua_State* ls ) -> void
+auto runtime::environment::websocket( lua_State* ls ) -> void
 {
     lua_pushvalue(ls, LUA_GLOBALSINDEX);
     register_lib(ls, "WebSocket", funcs);

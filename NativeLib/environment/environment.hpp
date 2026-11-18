@@ -3,7 +3,7 @@
 #include <lua.h>
 #include <lualib.h>
 
-namespace exploit::environment
+namespace runtime::environment
 {
     auto blank_function(lua_State* ls) -> int;
     

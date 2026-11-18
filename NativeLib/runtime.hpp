@@ -2,7 +2,7 @@
 
 #include <lstate.h>
 
-namespace exploit {
+namespace runtime {
     void leave( );
     bool start( std::uintptr_t job );
 }

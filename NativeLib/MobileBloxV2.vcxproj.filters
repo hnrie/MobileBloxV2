@@ -4,7 +4,7 @@
     <ClCompile Include="utils\utils.cpp" />
     <ClCompile Include="roblox\hooks.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="exploit.cpp" />
+    <ClCompile Include="runtime.cpp" />
     <ClCompile Include="dependencies\luau\Ast\src\Ast.cpp" />
     <ClCompile Include="dependencies\luau\Ast\src\Confusables.cpp" />
     <ClCompile Include="dependencies\luau\Ast\src\Lexer.cpp" />
@@ -132,7 +132,7 @@
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="utils\utils.hpp" />
     <ClInclude Include="roblox\hooks.hpp" />
-    <ClInclude Include="exploit.hpp" />
+    <ClInclude Include="runtime.hpp" />
     <ClInclude Include="dependencies\dobby\dobby.h" />
     <ClInclude Include="dependencies\luau\Ast\include\dependencies\luau\Ast.h" />
     <ClInclude Include="dependencies\luau\Ast\include\dependencies\luau\Common.h" />

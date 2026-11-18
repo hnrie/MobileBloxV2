@@ -55,7 +55,7 @@ static int newcclosure(lua_State* ls)
     return 1;
 }
 
-std::unordered_set<std::string> chunknamesbruh;
+std::unordered_set<std::string> registered_chunknames;
 static int loadstring(lua_State* ls)
 {
     LOGD(" LuauEnvCall -> loadstring - CallingThread -> %p", ls);
@@ -63,7 +63,7 @@ static int loadstring(lua_State* ls)
     auto str = luaL_checkstring(ls, 1);
     std::string chunkname = lua_isstring(ls, 2) ? lua_tostring(ls, 2) : utils::random_str(4);
     
-    static auto encoder = exploit::bytecode_encoder_t( );
+    static auto encoder = runtime::bytecode_encoder_t( );
     auto bytecode = Luau::compile(str, { 2, 1, 2 }, { true, true }, &encoder);
     if ( luau_load(ls, chunkname.c_str( ), bytecode.c_str( ), bytecode.size( ), 0) ) 
     {
@@ -72,7 +72,7 @@ static int loadstring(lua_State* ls)
         return 2;
     }
     
-    chunknamesbruh.insert(std::string(chunkname)); 
+    registered_chunknames.insert(std::string(chunkname)); 
     return 1;
 }
 
@@ -273,7 +273,7 @@ static int hookfunction(lua_State* ls)
         
         // hook
         // new ncc
-        src->c.f = exploit::environment::blank_function;
+        src->c.f = runtime::environment::blank_function;
         for (int i = 0; i < dst->nupvalues; i++)
             setobj2n(ls, &src->c.upvals[i], &dst->c.upvals[i]); // prob 0
         
@@ -298,7 +298,7 @@ static int hookfunction(lua_State* ls)
         ls->top++;
         
         // upval set
-        src->c.f = exploit::environment::blank_function;
+        src->c.f = runtime::environment::blank_function;
         for (int i = 0; i < dst->nupvalues; i++)
             setobj2n(ls, &src->c.upvals[i], &dst->c.upvals[i]);
         
@@ -341,7 +341,7 @@ static int hookfunction(lua_State* ls)
         ls->top++;
         
         // upval set
-        src->c.f = exploit::environment::blank_function;
+        src->c.f = runtime::environment::blank_function;
         for (int i = 0; i < dst->nupvalues; i++)
             setobj2n(ls, &src->c.upvals[i], &dst->c.upvals[i]);
         
@@ -380,7 +380,7 @@ static int isourclosure( lua_State* ls )
     {
         auto srcname = getstr(cl->l.p->source);
         
-        if ( strcmp(srcname, exploit_configuration::exploit_luaChunk.c_str( )) || chunknamesbruh.count( std::string(srcname) ) )
+        if ( strcmp(srcname, app_config::chunk_name.c_str( )) || registered_chunknames.count( std::string(srcname) ) )
         {
             lua_pushboolean(ls, 1);
             return 1;
@@ -410,7 +410,7 @@ static const luaL_Reg funcs[ ] = {
     {nullptr, nullptr}
 };
 
-auto exploit::environment::closure( lua_State* ls ) -> void
+auto runtime::environment::closure( lua_State* ls ) -> void
 {
     lua_pushvalue(ls, LUA_GLOBALSINDEX);
     register_lib(ls, nullptr, funcs);

@@ -205,7 +205,7 @@
     <ClCompile Include="environment\libraries\websocket.cpp" />
     <ClCompile Include="execution\execution.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="exploit.cpp" />
+    <ClCompile Include="runtime.cpp" />
     <ClCompile Include="dependencies\luau\Ast\src\Ast.cpp" />
     <ClCompile Include="dependencies\luau\Ast\src\Confusables.cpp" />
     <ClCompile Include="dependencies\luau\Ast\src\Lexer.cpp" />
@@ -383,7 +383,7 @@
     <ClInclude Include="dependencies\lz4\lz4.h" />
     <ClInclude Include="environment\environment.hpp" />
     <ClInclude Include="execution\execution.hpp" />
-    <ClInclude Include="exploit.hpp" />
+    <ClInclude Include="runtime.hpp" />
     <ClInclude Include="dependencies\dobby\dobby.h" />
     <ClInclude Include="dependencies\luau\Ast\include\dependencies\luau\Ast.h" />
     <ClInclude Include="dependencies\luau\Ast\include\dependencies\luau\Common.h" />

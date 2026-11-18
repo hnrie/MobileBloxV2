@@ -9,7 +9,7 @@ std::string LuaUI = R"(
 
 -- Instances:
 
-print("hi robloxheck")
+print("hi MobileBlox")
 print(game.PlaceId)
 
 local MobileBlox = Instance.new('ScreenGui')
@@ -135,5 +135,5 @@ local function OBDPHLQ_fake_script() -- Execute.LocalScript
 end
 coroutine.wrap(OBDPHLQ_fake_script)()
 
-print("hey robloxheck")
+print("hey MobileBlox")
 )";

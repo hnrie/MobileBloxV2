@@ -1,4 +1,4 @@
-#include "exploit.hpp"
+#include "runtime.hpp"
 
 #include <lua.h>
 #include <lualib.h>
@@ -14,18 +14,18 @@
 #include "LuaUI.hpp"
 
 // resets our stuff
-void exploit::leave( )
+void runtime::leave( )
 {
     auto TS = taskscheduler::get_singleton( );
     
     TS->set_CurrentSC( 0 );
-    TS->set_ExploitState( nullptr );
+    TS->set_RuntimeState( nullptr );
     
     execution::get_singleton( )->clearqueues( );
     DummyLScript = 0;
 }
 
-bool exploit::start( std::uintptr_t job )
+bool runtime::start( std::uintptr_t job )
 {
     using namespace roblox;
     
@@ -53,16 +53,16 @@ bool exploit::start( std::uintptr_t job )
         if (strncmp(flag->name, "Luau", 4) == 0)
             flag->value = true;
     
-    // set globals for the exploit.
+    // set globals for the runtime.
     TS->set_CurrentSC( scriptcontext );
     LOGD(" ScriptContext: 0x%X", TS->get_CurrentSC( ));
     
-    TS->set_ExploitState( functions::rlua_newthread( rL ) );
+    TS->set_RuntimeState( functions::rlua_newthread( rL ) );
     lua_ref(rL, -1); // no gc our thread 
     lua_pop(rL, 1); // pop our thread from rbx stack
-    LOGD(" ExploitState: %p", TS->get_ExploitState( ));
+    LOGD(" RuntimeState: %p", TS->get_RuntimeState( ));
     
-    auto ls = TS->get_ExploitState( );
+    auto ls = TS->get_RuntimeState( );
     if ( !ls )
     {
         LOGE(" Failed to create a new thread.");

@@ -71,7 +71,7 @@ static int namecall_hook(lua_State* ls)
     return namecall_orig(ls);
 }
 
-auto exploit::environment::mthooks( lua_State* ls ) -> void
+auto runtime::environment::mthooks( lua_State* ls ) -> void
 {
     lua_getglobal(ls, "game");
     game_userdata = reinterpret_cast<std::uintptr_t>(lua_touserdata(ls, -1));

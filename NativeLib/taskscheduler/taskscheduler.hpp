@@ -36,8 +36,8 @@ public:
         return _thiz;
     }
     
-    auto get_ExploitState( ) -> lua_State* { return this->mbState; }
-    auto set_ExploitState(lua_State* v) -> void { this->mbState = v; }
+    auto get_RuntimeState( ) -> lua_State* { return this->mbState; }
+    auto set_RuntimeState(lua_State* v) -> void { this->mbState = v; }
     
     auto get_CurrentSC( ) -> std::uintptr_t { return this->ScriptContext; }
     auto set_CurrentSC(uintptr_t v) -> void { this->ScriptContext = v; }

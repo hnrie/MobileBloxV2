@@ -761,7 +761,7 @@ static const luaL_Reg funcs[ ] = {
     {nullptr, nullptr}
 };
 
-auto exploit::environment::debug( lua_State* ls ) -> void
+auto runtime::environment::debug( lua_State* ls ) -> void
 {
     lua_pushvalue(ls, LUA_GLOBALSINDEX);
     register_lib(ls, "debug", funcs);

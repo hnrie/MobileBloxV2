@@ -2,12 +2,12 @@
 
 #include "../callcheck/callcheck.hpp"
 
-auto exploit::environment::blank_function( lua_State* ls ) -> int
+auto runtime::environment::blank_function( lua_State* ls ) -> int
 {
     return 0;
 }
 
-auto exploit::environment::registry_init( lua_State* ls ) -> void
+auto runtime::environment::registry_init( lua_State* ls ) -> void
 {
     mthooks( ls );
     
@@ -26,7 +26,7 @@ static int libsize(const luaL_Reg* l)
     return size;
 }
 
-auto exploit::environment::register_lib( lua_State* ls, const char* libname, const luaL_Reg* lib ) -> void
+auto runtime::environment::register_lib( lua_State* ls, const char* libname, const luaL_Reg* lib ) -> void
 {
     if ( libname ) 
     {

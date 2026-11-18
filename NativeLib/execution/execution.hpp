@@ -7,10 +7,10 @@
 #include <mutex>
 
 #include "../taskscheduler/taskscheduler.hpp"
-#include "../exploit.hpp"
+#include "../runtime.hpp"
 #include "../roblox/update.hpp"
 
-namespace exploit
+namespace runtime
 {
     class bytecode_encoder_t : public Luau::BytecodeEncoder {
         inline void encode(uint32_t* data, size_t count) override 

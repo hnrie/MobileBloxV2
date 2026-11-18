@@ -8,7 +8,7 @@
 #include <android/log.h>
 
 // maybe add a debug if to enable or disable these?
-#define TAG "robloxheck"
+#define TAG "MobileBlox"
 
 #define LOGD(...) ((void)__android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__))
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__))
@@ -16,10 +16,10 @@
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, TAG, __VA_ARGS__))
 
 // easier access
-namespace exploit_configuration
+namespace app_config
 {
-    const std::string exploit_name = "MobileBlox";
-    const std::string exploit_luaChunk = "@MB";
-    const std::string exploit_version = "2.0.0";
-    const std::string roblox_exploit_version = "2.603.563"; // lets try to be consistent here
+    const std::string app_name = "MobileBlox";
+    const std::string chunk_name = "@MB";
+    const std::string app_version = "2.0.0";
+    const std::string roblox_version = "2.603.563"; // lets try to be consistent here
 }
